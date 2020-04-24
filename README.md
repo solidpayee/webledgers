@@ -1,6 +1,6 @@
-# webledgers-playground
+# webledgers
 
-webledgers app
+webledgers
 
 spec: https://webledgers.org/
 
