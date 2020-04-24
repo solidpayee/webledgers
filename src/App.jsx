@@ -355,8 +355,8 @@ ReactDOM.render(
   <Provider stores={[store]}>
     <NavbarSolidLogin
       className='is-link'
-      title='Webledgers App'
-      sourceCode='https://github.com/play-grounds/webledgers-playground'
+      title='Webledgers'
+      sourceCode='https://github.com/solidpayee/webledgers/'
     />
 
     <div className='section'>
