@@ -1,0 +1,59 @@
+{
+  "name": "webledgers",
+  "version": "0.0.1",
+  "description": "webledgers playground",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/play-grounds/webledgers-playground.git"
+  },
+  "keywords": [
+    "webledgers"
+  ],
+  "author": "Melvin Carvalho <melvincarvalho@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/play-grounds/webledgers-playground/issues"
+  },
+  "homepage": "https://github.com/play-grounds/webledgers-playground#readme",
+  "snowpack": {
+    "webDependencies": [
+      "cogo-toast",
+      "react-circle",
+      "react-bulma-components",
+      "swr",
+      "jsonld"
+    ]
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-react-jsx": "^7.9.4",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "cogo-toast": "^4.2.3",
+    "install": "^0.13.0",
+    "jsonld": "^3.1.0",
+    "npm": "^6.14.4",
+    "prop-types": "^15.7.2",
+    "react": "npm:@pika/react@^16.13.1",
+    "react-bulma-components": "^3.2.0",
+    "react-circle": "^1.1.1",
+    "react-dom": "npm:@pika/react-dom@^16.13.1",
+    "serve": "^11.3.0",
+    "snowpack": "^1.7.1",
+    "swr": "^0.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-spread": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  }
+}
