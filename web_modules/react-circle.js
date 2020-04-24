@@ -1,4 +1,4 @@
-import { R as React } from './common/source.production-86498249.js';
+import React from './react.js';
 import { c as createCommonjsModule, u as unwrapExports, a as commonjsGlobal } from './common/_commonjsHelpers-7dcf7119.js';
 
 var circle = createCommonjsModule(function (module, exports) {

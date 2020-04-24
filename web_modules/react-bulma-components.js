@@ -1,6 +1,7 @@
-import { R as React } from './common/source.production-86498249.js';
-import { g as propTypes, r as require$$2 } from './common/index-5346a4b0.js';
+import React from './react.js';
+import require$$2 from './react-dom.js';
 import { u as unwrapExports, c as createCommonjsModule, a as commonjsGlobal } from './common/_commonjsHelpers-7dcf7119.js';
+import { g as propTypes } from './common/index-7b9c781f.js';
 
 var dist = createCommonjsModule(function (module, exports) {
 (function webpackUniversalModuleDefinition(root, factory) {

@@ -1,4 +1,4 @@
-import { c as createContext, b as useContext, d as useRef, u as useState, e as useCallback, f as useMemo, a as useEffect, g as useLayoutEffect, R as React } from './common/source.production-86498249.js';
+import React, { createContext, useContext, useRef, useState, useCallback, useMemo, useEffect, useLayoutEffect } from './react.js';
 
 var isArray = Array.isArray;
 var keyList = Object.keys;

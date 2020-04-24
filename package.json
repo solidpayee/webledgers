@@ -24,7 +24,9 @@
       "react-circle",
       "react-bulma-components",
       "swr",
-      "jsonld"
+      "jsonld",
+      "react",
+      "react-dom"
     ]
   },
   "dependencies": {
