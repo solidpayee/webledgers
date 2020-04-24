@@ -254,14 +254,14 @@ function Points () {
   function render (hourInt, dayInt, res) {
     processPoints(dayInt)
     reset(hourInt, dayInt, res)
-    document.title =
-      (dayInt % 30) +
-      ' ' +
-      ((dayInt % 360) - (dayInt % 30)) +
-      ' ' +
-      hourInt +
-      ' ' +
-      dayInt
+    renderTitle(hourInt, dayInt)
+  }
+
+  function renderTitle (hourInt, dayInt) {
+    let c = dayInt % 360
+    let s = dayInt % 30
+    let now = Math.floor(c / 30) + '.' + Math.floor(s / 5)
+    document.title = now + ' | ' + hourInt + ' | ' + dayInt
   }
 
   // update timer
@@ -306,6 +306,7 @@ function Points () {
   let startScore = localStorage.getItem('startScore') || 0
   let c = template.day % 360
   let s = template.day % 30
+  let now = Math.floor(c / 30) + '.' + Math.floor(s / 5)
   let l = c - s
   let t = template.count
   let d = template.day
@@ -321,9 +322,7 @@ function Points () {
       <hr />
 
       <div className='buttons'>
-        <span className='button is-large is-warning'>
-          Now {Math.floor(c / 30) + '.' + Math.floor(s / 5)}
-        </span>
+        <span className='button is-large is-warning'>Now {now}</span>
         {/* <span className='button is-large is-success'>C : {l}</span> */}
         <span className='button is-large is-link'>Day {d}</span>
         <span className='button is-large is-success'>Hour {t}</span>
