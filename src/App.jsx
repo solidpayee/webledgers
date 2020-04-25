@@ -214,7 +214,7 @@ function Points () {
   // play a sound if there is a transition
   function postProcessPoints (points) {
     let lastPoints = localStorage.getItem('localScore')
-    console.log('subcycle', subcycle, 'lastPoints', lastPoints)
+    // console.log('subcycle', subcycle, 'lastPoints', lastPoints)
 
     if (hasTransitioned(lastPoints, points, 360)) {
       cycle.end = new Date().getTime()
