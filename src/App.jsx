@@ -267,15 +267,6 @@ function Points () {
     document.title = now + ' | ' + hourInt + ' | ' + dayInt
   }
 
-  // update timer
-  const [seconds, setSeconds] = React.useState(0)
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds(seconds => seconds + 1)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
-
   // UPDATES
   React.useEffect(() => {
     fetchCount(subject)
