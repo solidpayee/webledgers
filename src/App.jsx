@@ -3,6 +3,7 @@ import ReactDOM from '../web_modules/react-dom.js'
 import NavbarSolidLogin from '../lib/components/bulma/Navbar.js'
 import Circle from '../lib/Circle.js'
 import cogoToast from '../web_modules/cogo-toast.js'
+import ReconnectingWebSocket from '../web_modules/reconnecting-websocket.js'
 
 // MODEL
 // subject
@@ -11,6 +12,11 @@ import cogoToast from '../web_modules/cogo-toast.js'
 
 // main
 // init
+var subject =
+  new URLSearchParams(document.location.search).get('uri') ||
+  'https://melvin.solid.live/credit/count.ttl'
+var ext = 'jsonld'
+
 var UI = {}
 UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
@@ -32,10 +38,6 @@ if (!localStorage.getItem('localScore')) {
   localStorage.setItem('localScore', 0)
 }
 
-var subject =
-  new URLSearchParams(document.location.search).get('uri') ||
-  'https://melvin.solid.live/credit/count.ttl'
-var ext = 'jsonld'
 // Create context for global store assignment
 const StateContext = React.createContext()
 
@@ -274,12 +276,13 @@ function Points () {
     return () => clearInterval(interval)
   }, [])
 
+  // UPDATES
   React.useEffect(() => {
     fetchCount(subject)
 
     let uri = location.href
     let wss = uri.replace('http', 'ws')
-    let w = new WebSocket('wss://melvin.solid.live/')
+    let w = new ReconnectingWebSocket('wss://melvin.solid.live/')
     w.onmessage = function (m) {
       let data = m.data
       // console.log('data', data)
@@ -293,6 +296,7 @@ function Points () {
       }
     }
     w.onopen = function () {
+      console.log('websocket open')
       w.send('sub ' + subject)
     }
     w.onerror = function () {
@@ -303,6 +307,7 @@ function Points () {
     }
   }, [])
 
+  // MAIN
   let startTime = localStorage.getItem('startTime') || 0
   let startScore = localStorage.getItem('startScore') || 0
   let c = template.day % 360
@@ -352,6 +357,7 @@ function Points () {
   )
 }
 
+// APP
 ReactDOM.render(
   <Provider stores={[store]}>
     <NavbarSolidLogin

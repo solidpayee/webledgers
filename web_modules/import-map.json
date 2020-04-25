@@ -6,6 +6,7 @@
     "react-bulma-components": "./react-bulma-components.js",
     "react-circle": "./react-circle.js",
     "react-dom": "./react-dom.js",
+    "reconnecting-websocket": "./reconnecting-websocket.js",
     "swr": "./swr.js"
   }
 }
