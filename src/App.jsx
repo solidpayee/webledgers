@@ -22,7 +22,7 @@ UI.store = $rdf.graph()
 UI.fetcher = new $rdf.Fetcher(UI.store)
 UI.updater = new $rdf.UpdateManager(UI.store)
 
-var cycle = { start: new Date().getTime() }
+var cycle = { start: new Date().getTime(), splits: [] }
 var subcycle = { start: new Date().getTime() }
 
 if (!localStorage.getItem('startTime')) {
@@ -176,34 +176,62 @@ function pushLast (val) {
   }
 }
 
+function showSegmentToast (displayTime, segment) {
+  cogoToast.info(displayTime, {
+    heading: 'Segment ' + segment + ' complete',
+    hideAfter: 150
+  })
+  console.log('Segment', segment, 'complete in', displayTime)
+  console.log('split times', cycle.splits)
+}
+
+function hasTransitioned (oldVal, newVal, threshold) {
+  let transitioned = false
+  if (
+    !isNaN(oldVal) &&
+    !isNaN(newVal) &&
+    Math.floor(newVal / threshold) > Math.floor(oldVal / threshold)
+  ) {
+    transitioned = true
+  }
+  return transitioned
+}
+
+function processSubcycleTransition (subcycle, lastPoints) {
+  let diff = subcycle.end - subcycle.start
+  if (diff && diff > 0) {
+    let seconds = Math.round(diff / 1000)
+    let displayTime = seconds + ' seconds'
+    let segment = Math.floor(lastPoints / 30) % 12
+    cycle.splits[segment] = seconds
+    showSegmentToast(displayTime, segment)
+  }
+}
+
 function Points () {
   const { template, reset, touch } = useStore(store)
 
   // play a sound if there is a transition
-  function processPoints (points) {
+  function postProcessPoints (points) {
     let lastPoints = localStorage.getItem('localScore')
     // console.log('subcycle', subcycle, 'lastPoints', lastPoints)
-    if (Math.floor(points / 360) !== Math.floor(lastPoints / 360)) {
-      cycle.end = new Date().getTime()
-      // console.log('cycle diff', cycle.end - cycle.start)
-      cycle = { start: new Date().getTime() }
-      new Audio('./audio/cheer.ogg').play()
-    } else if (Math.floor(points / 30) !== Math.floor(lastPoints / 30)) {
-      subcycle.end = new Date().getTime()
-      let diff = subcycle.end - subcycle.start
-      // console.log('subcycle diff', diff, 'subcycle', subcycle)
-      if (diff && diff > 0) {
-        let displayTime = Math.round(diff / 1000) + ' seconds'
-        let segment = Math.floor(lastPoints / 30) % 12
-        cogoToast.info(displayTime, {
-          heading: 'Segment ' + segment + ' complete',
-          hideAfter: 150
-        })
-        console.log('Segment', segment, 'complete in', displayTime)
-      }
 
+    if (hasTransitioned(lastPoints, points, 360)) {
+      cycle.end = new Date().getTime()
+      subcycle.end = new Date().getTime()
+
+      processSubcycleTransition(subcycle, lastPoints)
+
+      new Audio('./audio/cheer.ogg').play()
+      cycle = { start: new Date().getTime(), splits: [] }
       subcycle = { start: new Date().getTime() }
+    } else if (hasTransitioned(lastPoints, points, 30)) {
+      subcycle.end = new Date().getTime()
+
+      processSubcycleTransition(subcycle, lastPoints)
+
       new Audio('./audio/heal.ogg').play()
+      subcycle = { start: new Date().getTime() }
     }
     localStorage.setItem('localScore', points)
   }
@@ -237,6 +265,10 @@ function Points () {
       )
     }
 
+    function getValue (data, value) {
+      return data[0][value][0]['@value']
+    }
+
     // temporary hack as .jsonld not working with rdflib
     if (ext === 'jsonld') {
       fetch(subject, { headers: { Accept: 'application/ld+json' } })
@@ -255,7 +287,7 @@ function Points () {
 
   // RENDER
   function render (hourInt, dayInt, res) {
-    processPoints(dayInt)
+    postProcessPoints(dayInt)
     reset(hourInt, dayInt, res)
     renderTitle(hourInt, dayInt)
   }
@@ -276,14 +308,12 @@ function Points () {
     let w = new ReconnectingWebSocket('wss://melvin.solid.live/')
     w.onmessage = function (m) {
       let data = m.data
-      // console.log('data', data)
       cogoToast.success(data, { position: 'top-right' })
 
       if (data.match(/pub .*/)) {
         UI.store = $rdf.graph()
         UI.fetcher = new $rdf.Fetcher(UI.store)
         fetchCount(subject)
-        // location.reload()
       }
     }
     w.onopen = function () {
