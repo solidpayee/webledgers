@@ -149,7 +149,7 @@ const store = () => {
       let e = new Date().getTime() - localTime
       let a = Math.round(e / 300) / 100
       localStorage.setItem('localTime', new Date().getTime())
-      localStorage.setItem('localScore', day % 30)
+      // localStorage.setItem('localScore', day % 30)
       // cogoToast.info('Pace', {
       //   heading: Math.round(1000 - a * 100) / 100,
       //   hideAfter: 60
@@ -214,7 +214,7 @@ function Points () {
   // play a sound if there is a transition
   function postProcessPoints (points) {
     let lastPoints = localStorage.getItem('localScore')
-    // console.log('subcycle', subcycle, 'lastPoints', lastPoints)
+    console.log('subcycle', subcycle, 'lastPoints', lastPoints)
 
     if (hasTransitioned(lastPoints, points, 360)) {
       cycle.end = new Date().getTime()
@@ -233,6 +233,7 @@ function Points () {
       new Audio('./audio/heal.ogg').play()
       subcycle = { start: new Date().getTime() }
     }
+    // console.log('setting last ponts to', points)
     localStorage.setItem('localScore', points)
   }
 
