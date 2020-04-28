@@ -27,7 +27,9 @@
       "jsonld",
       "react",
       "react-dom",
-      "reconnecting-websocket"
+      "reconnecting-websocket",
+      "@util8/yyyymmdd",
+      "store2"
     ]
   },
   "dependencies": {
@@ -36,6 +38,7 @@
     "@babel/plugin-transform-react-jsx": "^7.9.4",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
+    "@util8/yyyymmdd": "0.0.2",
     "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
@@ -53,6 +56,7 @@
     "reconnecting-websocket": "^4.4.0",
     "serve": "^11.3.0",
     "snowpack": "^1.7.1",
+    "store2": "^2.11.1",
     "swr": "^0.2.0"
   },
   "devDependencies": {

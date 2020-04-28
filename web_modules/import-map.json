@@ -1,5 +1,6 @@
 {
   "imports": {
+    "@util8/yyyymmdd": "./@util8/yyyymmdd.js",
     "cogo-toast": "./cogo-toast.js",
     "jsonld": "./jsonld.js",
     "react": "./react.js",
@@ -7,6 +8,7 @@
     "react-circle": "./react-circle.js",
     "react-dom": "./react-dom.js",
     "reconnecting-websocket": "./reconnecting-websocket.js",
+    "store2": "./store2.js",
     "swr": "./swr.js"
   }
 }

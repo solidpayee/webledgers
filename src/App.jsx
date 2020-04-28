@@ -4,6 +4,8 @@ import NavbarSolidLogin from '../lib/components/bulma/Navbar.js'
 import Circle from '../lib/Circle.js'
 import cogoToast from '../web_modules/cogo-toast.js'
 import ReconnectingWebSocket from '../web_modules/reconnecting-websocket.js'
+import yyyymmdd from '../web_modules/@util8/yyyymmdd.js'
+import store2 from '../web_modules/store2.js'
 
 // MODEL
 // subject
@@ -26,19 +28,12 @@ UI.updater = new $rdf.UpdateManager(UI.store)
 var cycle = { start: new Date().getTime(), splits: [] }
 var subcycle = { start: new Date().getTime() }
 
-function yyyymmdd () {
-  var x = new Date()
-  var y = x.getFullYear().toString()
-  var m = (x.getMonth() + 1).toString()
-  var d = x.getDate().toString()
-  d.length == 1 && (d = '0' + d)
-  m.length == 1 && (m = '0' + m)
-  var yyyymmdd = y + m + d
-  return yyyymmdd
-}
 globalThis.date = yyyymmdd()
-globalThis.webledgers = {}
-globalThis.webledgers[globalThis.date] = []
+globalThis.webledgers = store2('webledgers') || {}
+if (!globalThis.webledgers[globalThis.date]) {
+  globalThis.webledgers[globalThis.date] = []
+}
+store2('webledgers', globalThis.webledgers)
 
 // localStorage
 if (!localStorage.getItem('startTime')) {
@@ -244,7 +239,9 @@ function Points () {
       processSubcycleTransition(subcycle, lastPoints)
 
       new Audio('./audio/cheer.ogg').play()
+      globalThis.date = yyyymmdd()
       globalThis.webledgers[globalThis.date].push(cycle.splits)
+      store2('webledgers', globalThis.webledgers)
       console.log('today', globalThis.webledgers[globalThis.date])
       cycle = { start: new Date().getTime(), splits: [] }
       subcycle = { start: new Date().getTime() }
