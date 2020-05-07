@@ -28,7 +28,7 @@ function Circle ({ rad, count, ...props }) {
         cy='175'
         stroke='Moccasin'
         fill='none'
-        strokeWidth='30'
+        strokeWidth='40'
         r={175}
         //        r={rad / factor}
       ></circle>
